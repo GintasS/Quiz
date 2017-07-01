@@ -2,7 +2,9 @@
 <h3> Game about answering the questions and being the smartest human being on the planet.</h3><br>
 
 Total question count - <strong>100</strong>.<br><br>
-Pictures are not mine, they've been taken from the internet.<br>
+
+Background Pictures are not mine, they've been taken from the internet.<br>
+Background Pictures are not included in this repository due to size.
 
 Subjects:<br><br>
 <strong>
