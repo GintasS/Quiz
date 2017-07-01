@@ -1,0 +1,82 @@
+/* Main elements*/
+body {
+	background-repeat: no-repeat;
+	background-size:100% 100%;
+	background-attachment: fixed;
+}
+
+input[type=radio] {
+	border: 0px;
+	width:30px;
+	height: 2em;
+}
+#game_info_arena {
+	margin:0 auto;
+	max-width:500px;
+	border:5px solid grey;
+	padding:0px 0px 0px 10px;
+}
+#game_action_arena {
+	max-width:500px;
+	margin:0 auto;
+}
+/* Regarding question and answer fields*/
+#question , #possible_answers {
+	background-color:grey;
+	font-size:25px;
+}
+
+#answer_variant_text1 , #answer_variant_text2 , #answer_variant_text3 , #answer_variant_text4 {
+	font-size:25px;
+	background-color:grey;
+}
+#question_div {
+	height:250px;
+	padding:10px 0px 0px 0px;
+}
+
+#empty_space {
+	padding:0px 0px 0px 15px;
+}
+#button_statistika_div {
+	float:right;
+}
+/* How to play info block*/
+#info_about_the_game {
+	font-size:18px;
+}
+#info_about_the_game_example_btn {
+	color:white;
+	background-color:grey;
+}
+/* Button design */
+#button_end_game, #button_next_question , #button_statistics {
+	background-color:grey;
+	border-color:grey;
+}
+#button_end_game , #button_next_question  {
+	margin-right:5px;
+}
+/* Statistics info block */
+#not_correct_color_td , #stat_not_correct_ans_count {
+	color:red;
+	font-weight: bold;
+}
+#correct_color_td  , #stat_correct_ans_count{
+	color:green;
+}
+#total_amount_questions_color_td , #stat_total_count_ans {
+	color:blue;
+}
+#stat_category_count {
+	color:black;
+}
+table td 
+{
+	font-size:16px;
+	font-weight:bold;
+	width:60%;
+}
+#progress_bar_percentage {
+	color:black;
+}

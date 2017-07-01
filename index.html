@@ -1,0 +1,191 @@
+﻿<!doctype html>
+<html lang=''>
+	<head>
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  
+	  <link rel="stylesheet" href="include/bootstrap.min.css">
+	  <link rel="stylesheet" type="text/css" href="styles.css">
+	  
+	  <script type="text/javascript"  src="include/jquery.min.js"></script>
+	  
+	  <script type="text/javascript" src="include/bootstrap.min.js"></script>
+	   
+	  <script type="text/javascript" src ="Game.js"></script>
+	  
+
+	  <title>Išminčius</title>
+	   
+	  <script>
+			$(document).ready(function()
+			{    
+					
+				Get_data_from_server("All_questions.txt"); // Starting the game.
+			});
+			// Key events for playing the game with the keyboard.
+			$(document).keydown(function(e) 
+			{
+				switch(e.which) {
+					case 39: // Right arrow key
+					Next_question();
+					break;
+					case 9:   // Tab
+					Open_the_info_block("#myModal","on");
+					break;
+					case 32: // Space
+					End_the_game();
+					break;
+					
+					default: return; // Exit this handler for other keys
+				}
+				e.preventDefault(); // prevent the default action (scroll / move caret)
+			});
+
+			
+		</script>
+	</head>
+	<body>
+
+		<div class="container">	 
+			<div id = "game_info_arena">			 
+			  <div id = "question_div"><font id = "question"></font></div>
+			  <p><font id = "possible_answers">Atsakymo variantai:</font></p>				
+				<div class="radio">
+				  <label><input type="radio" name="optradio" onchange="Chosen_variant()" id = "answer_variant1"><font id = "empty_space" ></font><font id = "answer_variant_text1"></font></label>
+				</div>	  
+				<div class="radio">
+				  <label><input type="radio" name="optradio" onchange="Chosen_variant()"  id = "answer_variant2"><font id = "empty_space" ></font><font id = "answer_variant_text2"></font></label>
+				</div>	  
+				<div class="radio">
+				  <label><input type="radio" name="optradio" onchange="Chosen_variant()"  id = "answer_variant3"><font id = "empty_space" ></font><font id = "answer_variant_text3"></font></label>
+				</div>
+				<div class="radio">
+				  <label><input type="radio" name="optradio" onchange="Chosen_variant()"  id = "answer_variant4"><font id = "empty_space" ></font><font id = "answer_variant_text4"></font></label>
+				</div>				
+			</div>
+			<font><br></font>
+			<div id="game_action_arena">		
+				<div class="btn-group">
+				   <button type="button" id = "button_end_game" class="btn btn-primary btn-lg"  onclick="End_the_game()" >Baigti viktoriną</button>
+				   <button type="button" id = "button_next_question" class="btn btn-primary btn-lg" onclick="Next_question()">Kitas klausimas</button>
+				</div>
+				<div id = "button_statistika_div">
+				 <button type="button" id = "button_statistics" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Statistika</button>
+				</div>
+			</div>		
+		</div>
+
+		<!--- Modal of statistics --->
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog">		
+			  <!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+					  <button type="button" class="close" data-dismiss="modal">&times;</button>
+					  <h4 class="modal-title">Statistika</h4>
+					</div>
+					<div class="modal-body">
+						<center>					
+							<table class="table">
+								<tbody>
+								  <tr>
+									<td>Greičiausiai atsakyto klausimo laikas:</td>
+									<td id="stat_fastest_time">0</td>
+								  </tr>
+								  <tr>
+									<td>Lėčiausiai atsakyto klausimo laikas:</td>
+									<td id="stat_slowest_time">0</td>
+								  </tr>
+								  <tr>
+									<td>Atsakinėjamo klausimo laikas:</td>
+									<td id="stat_current_answer_time">0</td>
+								  </tr>	
+								  <tr>
+									<td>Klausimų kategorijų skaičius:</td>
+									<td id="stat_category_count"><a href="#" class="tooltip" data-toggle="tooltip" data-placement="bottom" >8</a>8</td>
+								  </tr>	
+								  <tr>
+									<td>Teisingai atsakytų klausimų skaičius:</td>
+									<td id="stat_correct_ans_count">0</td>
+								  </tr>	
+								  <tr>
+									<td>Neteisingai atsakytų klausimų skaičius:</td>
+									<td id="stat_not_correct_ans_count">0</td>
+								  </tr>							  
+								  <tr>
+									<td>Klausimų skaičius:</td>
+									<td id="stat_total_count_ans">0</td>
+								  </tr>								
+								  <tr>
+									<td>Progresas:</td>
+									<td> 					
+										<div class="progress">
+											<div class="progress-bar" role="progressbar">
+											<font id = "progress_bar_percentage"></font>
+											</div>
+										</div>
+									</td>
+								  </tr>
+								</tbody>
+							</table>
+						</center>
+					 </div>
+					<div class="modal-footer">
+					  <button type="button" class="btn btn-default" data-dismiss="modal">Uždaryti</button>
+					</div>
+				</div>		  
+			</div>
+		</div>
+		<!--- Modal of how to play --->
+		<div class="modal fade" id="myModal4" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+					  <button type="button" class="close" data-dismiss="modal">&times;</button>
+					  <h3 class="modal-title">Kaip žaisti?</h3>
+					</div>				  
+					<div class="modal-body">
+						<p>
+							<font id ="info_about_the_game">
+							Jūsų tikslas yra kuo greičiau teisingai atsakyti į pateiktus klausimus.<br><br>Valdymas:<br><br>
+							Paspaudus <kbd>&#9654;</kbd> klaviatūroje arba mygtuką <font id="info_apie_viktor_button1"> Kitas klausimas</font><br>
+							&#10141; galima pereiti prie kito klausimo.<br>
+							Paspaudus <kbd>Space</kbd> arba <font id="info_apie_viktor_button1"> Baigti viktoriną</font><br>
+							&#10141; pamatysite žaidimo statistiką ir toliau žaisti nebegalėsite.<br>
+							Paspaudus <kbd>Tab</kbd> klaviatūroje arba mygtuką <font id="info_apie_viktor_button1"> Statistika</font><br>
+							&#10141; pamatysite žaidimo statistiką.<br>
+							Po kiekvieno klausimo ekrane pamatysite:<br> 
+							</font>										
+							<div class="alert alert-success fade in"> <h100>ATSAKYMAS TEISINGAS  </h100> </div>							
+							<div class="alert alert-danger fade in"> <h100>ATSAKYMAS NETEISINGAS </h100> </div>							
+						</p>
+					</div>
+				</div>			  
+			</div>
+		</div>
+		<!--- Modals for telling the player if he answered the question correctly or not --->
+		<div class="modal fade" id="myModal2" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body">
+					  <div class="alert alert-success fade in">
+						<strong>ATSAKYMAS TEISINGAS</strong>
+					  </div>			
+					</div>
+				</div>			  
+			</div>
+		</div>
+
+		<div class="modal fade" id="myModal3" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body">
+					  <div class="alert alert-danger fade in">
+						<strong>ATSAKYMAS NETEISINGAS</strong>
+					  </div>		
+					</div>
+				</div>
+			</div>
+		</div>	
+	</body>
+<html>
