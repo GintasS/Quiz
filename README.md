@@ -4,7 +4,7 @@
 Total question count - <strong>100</strong>.<br><br>
 
 Background Pictures are not mine, they've been taken from the internet.<br>
-Background Pictures are not included in this repository due to size.
+Background Pictures are not included in this repository due to their size.
 
 Subjects:<br><br>
 <strong>
