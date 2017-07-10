@@ -3,6 +3,9 @@
 
 Total question count - <strong>100</strong>.<br><br>
 
+You can play this quiz by clicking the url below:<br>
+<a href="http://vilniausfonas.us.lt/viktorina" target="_blank">url</a>
+
 Background Pictures are not mine, they've been taken from the internet.<br>
 Background Pictures are not included in this repository due to their size.
 
