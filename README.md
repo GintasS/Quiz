@@ -19,6 +19,7 @@ Astronomy,<br>Biology,<br>Mathematics,<br>Computer science,<br>Physics,<br>Histo
 <li> Changed Quiz from being client-side only, now
   answer is checked in back-end.</li>
 <li> Translated questions,options into English.</li>
+  <li> Fixed README.md: updated website url, fixed typos.</li>
 </ul>
 
 <table style="width:100%">
