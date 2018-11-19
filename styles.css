@@ -1,0 +1,77 @@
+/* Main elements*/
+body {
+	background-repeat: no-repeat;
+	background-size:100% 100%;
+	background-attachment: fixed;
+}
+
+input[type=radio] {
+	border: 0px;
+	width:30px;
+	height: 1.7em;
+	padding:0px 0px 0px 15px;
+}
+#quizInfoDiv {
+	margin:0 auto;
+	max-width:500px;
+	background-color:	rgba(191, 187, 182, 0.82);
+	border:5px solid 	grey;	
+	padding:0px 15px 0px 15px;
+}
+#quizActionDiv {
+	max-width:500px;
+	margin:0 auto;
+}
+#question {
+	font-size:22px;	
+	font-weight:bold;
+	color:black;	
+}
+#option0 , #option1 , #option2 , #option3 {
+	font-size:22px;
+	font-weight:bold;
+	color:blue;
+}
+#questionDiv {
+	height:200px;
+}
+
+#emptySpace {
+	padding:0px 0px 0px 15px;
+}
+#statsDivBTN {
+	float:right;
+}
+/* How to play info block*/
+#aboutQuiz {
+	font-size:16px;
+}
+
+/* Button design */
+#endQuizBTN, #nextQuestionBTN , #statsBTN {
+	background-color:	rgba(191, 187, 182, 1);
+	border-color:	rgba(191, 187, 182, 1);
+	color:black;
+}
+#endQuizBTN , #nextQuestionBTN  {
+	margin-right:5px;
+}
+input[type=radio]:disabled {
+    background-color: red;
+}
+/* Statistics info block */
+#statsWrongA {
+	color:red;
+}
+#statsCorrectA {
+	color:green;
+}
+#statsTotalQ {
+	color:blue;
+}
+#statsCategC {
+	color:black;
+}
+table td {
+	max-width:40%;
+}

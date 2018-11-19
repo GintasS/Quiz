@@ -1,0 +1,161 @@
+﻿<!doctype html>
+<html lang=''>
+	<head>
+	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  
+	  <link rel="stylesheet" href="include/bootstrap.min.css">
+	  <link rel="stylesheet" type="text/css" href="styles.css">
+	  
+	  <script type="text/javascript" src="include/jquery.min.js"></script>
+	  
+	  <script type="text/javascript" src="include/bootstrap.min.js"></script>
+	   
+	  <script type="text/javascript" src ="Quiz.js"></script>
+	  
+	  <title>Quiz</title>
+	   
+	  <script>
+		$(document).ready(function()
+		{    
+			infoBlock("#myModal4","on");			
+			getDataFromServer("quizdata.php"); // Starting the game.
+		});
+		// Key events for playing the game with the keyboard.
+		$(document).keydown(function(e) 
+		{
+			switch(e.which) {
+				case 39: // Right arrow key
+				checkQuestion();
+				break;
+				case 9:   // Tab
+				infoBlock("#myModal","on");
+				break;
+				case 32: // Space
+				endQuiz();
+				break;
+				
+				default: return; // Exit this handler for other keys
+			}
+			e.preventDefault(); // prevent the default action (scroll / move caret)
+		});
+		</script>
+	</head>
+	<body>
+	
+		<div class="container">	 
+			<div id = "quizInfoDiv">			 
+			  <div id = "questionDiv"><font id = "question"></font></div>			
+				<div class="radio">
+				  <label>
+					<input type="radio" name="optradio" onchange="optionWasChosen()" id = "inputOption0">
+						<font id = "emptySpace" ></font><font id = "option0"></font>
+					</input>
+				  </label>		
+				</div>	  
+				
+				<div class="radio">
+				  <label>
+					<input type="radio" name="optradio" onchange="optionWasChosen()"  id = "inputOption1">
+						<font id = "emptySpace" ></font><font id = "option1"></font>
+					</input>
+				  </label>
+				</div>	  
+				
+				<div class="radio">
+				  <label>
+					<input type="radio" name="optradio" onchange="optionWasChosen()"  id = "inputOption2">
+						<font id = "emptySpace" ></font><font id = "option2"></font>
+				    </input>
+				  </label>
+				</div>
+				
+				<div class="radio">
+				  <label>
+					  <input type="radio" name="optradio" onchange="optionWasChosen()"  id = "inputOption3">
+						<font id = "emptySpace" ></font><font id = "option3"></font>
+					  </input>
+				  </label>
+				</div>	
+			</div>
+			<font><br></font>
+			<div id="quizActionDiv">		
+				<div class="btn-group">
+				   <button type="button" id = "endQuizBTN" class="btn btn-primary btn-lg"  onclick="endQuiz()">End quiz</button>
+				   <button type="button" id = "nextQuestionBTN" class="btn btn-primary btn-lg" onclick="checkQuestion()">Next question</button>
+				</div>
+				<div id = "statsDivBTN">
+				 <button type="button" id = "statsBTN" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Statistics</button>
+				</div>
+			</div>		
+		</div>
+		
+		<center>
+		<!--- Modal of statistics --->
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog">		
+			  <!-- Modal content-->
+				<div class="modal-content" style="width:70%">
+					<div class="modal-header">
+					  <button type="button" class="close" data-dismiss="modal">&times;</button>
+					  <h4 class="modal-title">Statistics</h4>
+					</div>
+					<div class="modal-body">					
+						<table class="table">
+							<tbody>
+							  <tr><td>Fastest time:</td><td class="col-sm-3"  id="statsFastest">0</td></tr>
+							  <tr><td>Slowest time:</td><td class="col-sm-3" id="statsLowest">0</td></tr>
+							  <tr><td>Current time:</td><td class="col-sm-3" id="statsCur">0</td></tr>	
+							  <tr><td>Categories:</td><td class="col-sm-3"  id="statsCategC">
+								<a href="#" class="tooltip" data-toggle="tooltip" data-placement="bottom" >8</a>8</td>
+							  </tr>	
+							  <tr><td>Correct questions:</td><td class="col-sm-3" id="statsCorrectA">0</td></tr>	
+							  <tr><td>Wrong questions:</td><td class="col-sm-3" id="statsWrongA">0</td></tr>
+							  <tr><td>Questions:</td><td class="col-sm-3"  id="statsTotalQ">0</td></tr>								
+							</tbody>
+						</table>
+					 </div>
+					<div class="modal-footer">
+					  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>		  
+			</div>
+		</div>
+		</center>
+		<!--- Modal of how to play --->
+		<div class="modal fade" id="myModal4" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+					  <button type="button" class="close" data-dismiss="modal">&times;</button>
+					  <h4 class="modal-title">How to play?</h4>
+					</div>				  
+					<div class="modal-body">
+						<p>
+							<font id ="aboutQuiz">
+							On <kbd>&#9654;</kbd> key or button <font id="info_apie_viktor_button1">'Next question'</font><br>
+							&#10141; you will go to the next question.<br>
+							On <kbd>Space</kbd> key or button <font id="info_apie_viktor_button1">'End quiz'</font><br>
+							&#10141; you will see statistics and the game will end.<br>
+							On <kbd>Tab</kbd> key or button <font id="info_apie_viktor_button1">'Statistics'</font><br>
+							&#10141; you will see statistics page.<br>
+							</font>															
+						</p>
+					</div>
+				</div>			  
+			</div>
+		</div>
+		<!--- Modals for telling the player if he answered the question correctly or not --->
+		<div class="modal fade" id="myModal2" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body">
+					  <div id ="answerStatusDiv">
+						<strong id ="answerStatusText"></strong>
+					  </div>			
+					</div>
+				</div>			  
+			</div>
+		</div>
+	</body>
+<html>
