@@ -14,7 +14,12 @@ Subjects:<br><br>
 Astronomy,<br>Biology,<br>Mathematics,<br>Computer science,<br>Physics,<br>History,<br>Geography,<br>Biology<br>
 </strong>
 
-Questions are in lithuanian.
+<h3> CHANGELOG 11/19/2018</h3>
+<ul>
+<li> Changed Quiz from being client-side only, now
+  answer is checked in back-end.</li>
+<li> Translated questions,options into English.</li>
+</ul>
 
 <table style="width:100%">
   <tr>
@@ -24,19 +29,29 @@ Questions are in lithuanian.
   </tr>
   <tr>
     <td>index.html</td>
-    <td>191</td> 
+    <td>161</td> 
     <td>HTML/JQUERY/BOOSTRAP/CSS</td>
   </tr>
   <tr>
-    <td>Game.js</td>
-    <td>316</td> 
+    <td>Quiz.js</td>
+    <td>322</td> 
     <td>JAVASCRIPT/JQUERY/AJAX/</td>
   </tr>
   <tr>
+    <td>quizdata.php</td>
+    <td>58</td> 
+    <td>PHP/MYSQL/SQL/JSON</td>
+  </tr>  
+   <tr>
+    <td>quizanswer.php</td>
+    <td>80</td> 
+    <td>PHP/MYSQL/SQL</td>
+  </tr>   
+  <tr>
     <td>styles.css</td>
-    <td>82</td> 
+    <td>77</td> 
     <td>CSS</td>
   </tr>    
 </table>
 <br>
-Total:<strong> 589</strong>  lines of code.
+Total:<strong> 695</strong>  lines of code.
