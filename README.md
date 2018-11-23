@@ -31,7 +31,7 @@ Astronomy,<br>Biology,<br>Mathematics,<br>Computer science,<br>Physics,<br>Histo
   <tr>
     <td>index.html</td>
     <td>161</td> 
-    <td>HTML/JQUERY/BOOSTRAP/CSS</td>
+    <td>HTML/JQUERY/BOOTSTRAP/CSS</td>
   </tr>
   <tr>
     <td>Quiz.js</td>
