@@ -1,7 +1,7 @@
 # Question_game
 <h3> Game about answering the questions and being the smartest human being on the planet.</h3><br>
 
-Total question count - <strong>100</strong>.<br><br>
+Total question - <strong>100</strong>.<br><br>
 
 You can play this quiz by clicking this link:
 <a href="http://vilniausfonas.info/en/quiz" target="_blank">url</a><br>
