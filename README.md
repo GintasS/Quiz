@@ -41,9 +41,14 @@ Astronomy,<br>Biology,<br>Mathematics,<br>Computer science,<br>Physics,<br>Histo
   </tr>
   <tr>
     <td>Quiz.js</td>
-    <td>322</td> 
+    <td>421</td> 
     <td>JAVASCRIPT/JQUERY/AJAX/</td>
   </tr>
+   <tr>
+    <td>hash.js</td>
+    <td>10</td> 
+    <td>JAVASCRIPT/https://github.com/emn178/js-sha3</td>
+  </tr> 
   <tr>
     <td>quizdata.php</td>
     <td>58</td> 
@@ -51,9 +56,14 @@ Astronomy,<br>Biology,<br>Mathematics,<br>Computer science,<br>Physics,<br>Histo
   </tr>  
    <tr>
     <td>quizanswer.php</td>
-    <td>80</td> 
+    <td>87</td> 
     <td>PHP/MYSQL/SQL</td>
-  </tr>   
+  </tr>
+   <tr>
+    <td>hash.php</td>
+    <td>34</td> 
+    <td>PHP/PHP-SHA3-Streamable</td>
+  </tr>  
   <tr>
     <td>styles.css</td>
     <td>77</td> 
@@ -61,4 +71,4 @@ Astronomy,<br>Biology,<br>Mathematics,<br>Computer science,<br>Physics,<br>Histo
   </tr>    
 </table>
 <br>
-Total:<strong> 695</strong>  lines of code.
+Total:<strong> 848</strong>  lines of code.
