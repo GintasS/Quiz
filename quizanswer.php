@@ -48,9 +48,7 @@
 		die("Unable to check the answer!");
 	
 	// Prepared SQL statement for security.
-	$result2 = $conn->prepare("SELECT quiz_answers.Answer FROM quiz_questions 
-	INNER JOIN quiz_answers ON quiz_answers.Id = quiz_questions.Id 
-	WHERE quiz_questions.Id IN(SELECT Id FROM quiz_answers WHERE `Question`=?)");
+	$result2 = $conn->prepare("");
 	$result2->bind_param("s", $playerQuestion);
 	
 	// If SQL query failed, stop execution.
@@ -72,12 +70,12 @@
 		$salt = generateSalt(32);
 
 		if ($realAnswer === $playerAnswer)
-			echo $salt . PHP_EOL . generateHash($salt . $playerQuestion . $salt);
+			echo $salt . PHP_EOL . generateHash(;
 		else
-			echo $salt . PHP_EOL . generateHash($playerQuestion . $salt);
+			echo $salt . PHP_EOL . generateHash();
 	}
 	else
-		echo $salt . PHP_EOL . generateHash($playerQuestion . $salt);
+		echo $salt . PHP_EOL . generateHash();
 
 	$conn->close();
 ?>
