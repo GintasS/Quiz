@@ -1,4 +1,4 @@
-﻿// Main object: holds current question data.
+// Main object: holds current question data.
 function Question(Qname,BackImage){
 	
 	// Question name.
@@ -75,37 +75,44 @@ var quizStatus    = new State();
 var quizQuestion  = null;
 var quizStats	  = new Statistics();
 
-/* Gets data from server by URL,
-   takes into account the quiz state.
-   @param {requestUrl} - url to get via AJAX.
+/* Get data from server by URL.
+   @constructor  
+   @param {string} requestUrl - Url to get via AJAX.
+   
+   @return {Void}.  
 */
-function getDataFromServer(requestUrl)
-{	
+function getDataFromServer(requestUrl) {	
+
 	let dataa = null;
 	let dataTypee = null;
 
-	if ( quizStatus.curState == 0 || quizStatus.curState == 1)
+	if (quizStatus.curState == 0 || quizStatus.curState == 1)
 	{
 		// In case player changes the values.
-		if ( quizStatus.qNumber - 1 < 0 || 
-			quizStatus.qNumber - 1 > quizStatus.qCount + 1) {			
+		if (quizStatus.qNumber - 1 < 0 || 
+			quizStatus.qNumber - 1 > quizStatus.qCount + 1) 
+		{			
 			quizError("Quiz index is out of bounds!");
 		}
 	
 		let randomNumber = quizStatus.randNumbers[quizStatus.qNumber - 1];
 		
 		// In case user changes the array of random values.
-		if ( randomNumber < 1 || randomNumber > quizStatus.qCount )
+		if (randomNumber < 1 || randomNumber > quizStatus.qCount)
 			quizError("Random number is out of bounds!");
-		else if ( quizStatus.qNumber == quizStatus.qCount + 1 )
+		else if (quizStatus.qNumber == quizStatus.qCount + 1)
 			endQuiz();
 		
-		dataa = {"rnd": randomNumber };
+		dataa = {"rnd": randomNumber};
 		dataTypee = "JSON";
 	}
-	else if ( quizStatus.curState == 2 )
+	else if (quizStatus.curState == 2)
 	{
-		dataa = { "st": 2 , "q": quizQuestion.name, "ans": quizQuestion.selectedAnswer};
+		dataa = {
+			"st": 2, 
+			"q": quizQuestion.name, 
+			"ans": quizQuestion.selectedAnswer
+		};
 		dataTypee = "text";
 	}
 	// I use AJAX to get a question and
@@ -117,7 +124,7 @@ function getDataFromServer(requestUrl)
 		url: requestUrl,
 		dataType: dataTypee, 
 		success:function(data) {
-			if ( dataTypee == "JSON" )
+			if (dataTypee == "JSON")
 				dataFromServer(data);
 			else
 				checkForAnswerStatus(data);	
@@ -128,41 +135,56 @@ function getDataFromServer(requestUrl)
 		}
 	});
 }
-// Get question data.
-// @param {data} - data from the server.
-function dataFromServer(data)
-{	
+
+/* Parses JSON data.
+   @constructor  
+   @param {json} data - JSON data from the server.
+   
+   @return {Void}.  
+*/
+function dataFromServer(data) {	
+
 	$.each(data.info.quiz_info, function(i, v) 
 	{
-		quizQuestion = new Question(v.Question,v.BackImage)
+		quizQuestion = new Question(v.Question, v.BackImage)
 		quizQuestion.add(v.Option1);
 		quizQuestion.add(v.Option2);
 		quizQuestion.add(v.Option3);
 		quizQuestion.add(v.Option4);		
 	});
 	
-	if ( quizQuestion != null && quizStatus.curState  != 3 )
+	if (quizQuestion != null && quizStatus.curState != 3)
 		prepareQuiz();
 }
-// Prepares the quiz: resets values, changes button states.
-function prepareQuiz()
-{	
+
+/* Prepare the quiz.
+   @constructor  
+
+   @return {Void}.  
+*/
+function prepareQuiz() {
+	
 	changeButtonState("#nextQuestionBTN", "disabled", true);
 	resetPreviousData();
 	fillQuestionData();
 	
 	$('#myModal4').on('hidden.bs.modal', function () {
-		if ( quizStatus.curState == 0 )
+		if (quizStatus.curState == 0 )
 			countdown();
 	})
 
 	$('.tooltip').tooltip({title: quizStats.catText}); 
 }
-// Reset data after each question.
-function resetPreviousData()
-{
-	$( "#question" ).empty();
-	for ( i = 0;i < quizStatus.oCount;i++ )
+
+/* Reset all the data for a new question.
+   @constructor  
+
+   @return {Void}.  
+*/
+function resetPreviousData() {
+	
+	$("#question").empty();
+	for (i = 0; i < quizStatus.oCount;i++)
 	{	
 		$("#option" + i).empty();
 		document.getElementById("inputOption" + i).checked = false;
@@ -171,99 +193,128 @@ function resetPreviousData()
 	quizStatus.oChosen= 0;
 }
 
-function fillQuestionData()
-{	
+/* Fill all the data regarding the current question.
+   @constructor  
+
+   @return {Void}.  
+*/
+function fillQuestionData() {	
+
 	// Sets the question with it's number.
 	$("#question").append(quizStatus.qNumber + "." + quizQuestion.name);
 	quizStatus.qNumber++;
 	
 	// Swap every available option place.
-	for ( a = 0; a < quizStatus.oCount;a++)
+	for (a = 0; a < quizStatus.oCount;a++)
 	{
-		let rnd = generateNumber(0,quizStatus.oCount);
+		let rnd = generateNumber(0, quizStatus.oCount);
 		let temp = quizQuestion.options[a];
 		quizQuestion.options[a] = quizQuestion.options[rnd];
 		quizQuestion.options[rnd] = temp;
 	}
 	// Adds options to quiz.
-	for ( i = 0;i < quizStatus.oCount;i++)
+	for (i = 0; i < quizStatus.oCount;i++)
 		$("#option" + i).append(quizQuestion.options[i]);
 
-	$("body").css('background-image','url('+quizQuestion.bImage+')');
+	$("body").css('background-image','url(' + quizQuestion.bImage + ')');
 }
 
-// Utility functions.
+/* Function for handling selected user option.
+   @constructor  
 
-// Function for managing player click.
-function optionWasChosen()
-{
+   @return {Void}.  
+*/
+function optionWasChosen() {
+	
 	changeButtonState("#nextQuestionBTN", "disabled", false);
 	quizStatus.oChosen= 1;
 }
 /* Change button state.
-   @param {target} - Button to change.
-   @param {action} - Action to change (our case is "disabled").
-   @param {state}  - Enable or disable action (true or false).
+   @constructor  
+   @param {string} target - Button to change.
+   @param {string} action - Action to change (our case is "disabled").
+   @param {string} state - Enable or disable action (true or false).
+   
+   @return {Void}.  
 */
-function changeButtonState(target, action, state)
-{
-	$(target).attr(action,state);
+function changeButtonState(target, action, state) {
+	
+	$(target).attr(action, state);
 }
+
 /* Generate a random number.
-   @param {min} - minimum range.
-   @param {max} - maximum range.
+   @constructor  
+   @param {int} min - Minimum range.
+   @param {int} max - Maximum range.
+   
+   @return {int}. 
 */
-function generateNumber(min,max)
-{
+function generateNumber(min, max) {
+	
 	return Math.floor((Math.random() * max)) + min;
 }
-// For stoping the game, or in case
-// of errors.
-function quizError(msg)
-{
+
+/* Throw an error with a message.
+   @constructor  
+   @param {string} msg - Message to display.
+
+   @return {Void}.   
+*/
+function quizError(msg) {
+	
 	throw new Error(msg);
 }
 
-// End of utility functions.
+/* Function, that checks user submited answer by geting
+   answer from DB via AJAX.
+   @constructor  
 
-// Get value of selected option and POST it to the server.
-function checkQuestion()
-{	
-	if ( quizStatus.curState == 3 || quizStatus.oChosen!= 1)
+   @return {Void}.   
+*/
+function checkQuestion() {	
+
+	if (quizStatus.curState == 3 || quizStatus.oChosen!= 1)
 		return;
 	
-	for ( i = 0;i < quizStatus.oCount;i++)
+	for (i = 0; i < quizStatus.oCount;i++)
 	{
-		if ( document.getElementById("inputOption"+i).checked == true )
+		if (document.getElementById("inputOption"+i).checked == true)
 			quizQuestion.selectedAnswer = quizQuestion.options[i];
 	}
+	
 	quizStatus.curState = 2;
 	// AJAX request to the server.
 	getDataFromServer("quizanswer.php")
 }
-// Displays Bootstrap modal with a custom message
-// and class.After 1 second it asks server for new question.
-function checkForAnswerStatus(data)
-{
-	$("#answerStatusText").empty();
-	if ( data == "1" )
-	{
-		quizStats.correctA++;
-		$( "#answerStatusDiv" ).addClass( "alert alert-success fade in" );
-		$("#answerStatusText").append("Correct answer");
-	}
-	else
-	{
-		quizStats.wrongA++;
-		$( "#answerStatusDiv" ).addClass( "alert alert-danger fade in" );
-		$("#answerStatusText").append("Wrong answer");
 
+/* Function, that displays answer status to the player.
+   @constructor  
+   @param {string} data - Data from server.
+   
+   @return {Void}.   
+*/
+function checkForAnswerStatus(data) {
+	
+	$("#answerStatusText").empty();
+	if (data.indexOf("\n") && data.length === 161)
+	{
+		let salt = data.substr(0, data.indexOf("\n")),
+			hash = sha3_512(salt + quizQuestion.name + salt),
+			serverHash = data.substr(data.indexOf("\n") + 1, 128);
+		
+		if (hash === serverHash)	
+			answerStatus(0);
+		else
+			answerStatus(1);		
 	}
+	else 
+		answerStatus(0);
+	
 	infoBlock("#myModal2","on");
 	setTimeout(function(){
-		$( "#answerStatusDiv" ).removeClass("alert alert-danger fade in");
-		$( "#answerStatusDiv" ).removeClass("alert alert-success fade in");		
-		infoBlock("#myModal2","off");
+		$("#answerStatusDiv").removeClass("alert alert-danger fade in");
+		$("#answerStatusDiv").removeClass("alert alert-success fade in");		
+		infoBlock("#myModal2", "off");
 	}, 1000);
 	
 	// Update statistics.
@@ -271,32 +322,74 @@ function checkForAnswerStatus(data)
 	quizStatus.curState = 1;
 	getDataFromServer("quizdata.php");
 }
-// Open/close info block(aka Bootstrap modal).
-function infoBlock(infoBlock,state)
-{
+
+/* Function, that sets answer status.
+   @constructor  
+   @param {int} mode - Determine if answer is correct or wrong.
+
+   @return {Void}.
+*/
+function answerStatus(mode) {
+
+	if(mode === 0)
+		quizStats.correctA++;
+	else if(mode === 1)
+		quizStats.wrongA++;
+	
+	$("#answerStatusDiv").addClass(((mode === 0) ? 
+	"alert alert-success fade in":"alert alert-danger fade in"));
+	$("#answerStatusText").append(((mode === 0) ? 
+	"Correct answer":"Wrong answer"));	
+}
+
+/* Function, that opens/closes bootstrap modal.
+   @constructor  
+   @param {string} infoBlock - DOM element, that has a modal.
+   @param {string} state - Determine if we need to open the modal
+   or close it.
+   
+   Possible state values:
+   "on" - opens a modal.
+   "off" - closes a modal.
+   
+   @return {Void}.   
+*/
+function infoBlock(infoBlock, state) {
+	
 	if (state == "on" )
 		$(infoBlock).modal();
 	else if (state == "off")
 		$(infoBlock).modal('hide');
 }
-// For time keeping.
-function countdown()
-{
-	if ( quizStatus.curState == 3 )
+
+/* Function, that displays and manages the timer.
+   @constructor  
+   
+   @return {Void}.   
+*/
+function countdown() {
+	
+	if (quizStatus.curState == 3)
 		return;
 	
 	document.getElementById("statsCur").innerHTML = quizStats.curAnswerT + " sec";
-	if ( quizStats.curAnswerT + 1 <= 999 )
+	if (quizStats.curAnswerT + 1 <= 999)
 		quizStats.curAnswerT++;
-	setTimeout(countdown,1000);	
+	
+	setTimeout(countdown, 1000);	
 }
 
-function statistics()
-{	
+/* Function, that displays statistics in modal.
+   @constructor  
+   
+   @return {Void}.   
+*/
+function statistics() {
+	
 	// Get time of fastest and slowest question.
-	if ( quizStats.curAnswerT > quizStats.slowAnswerT )
+	if (quizStats.curAnswerT > quizStats.slowAnswerT)
 		quizStats.slowAnswerT = quizStats.curAnswerT ;
-	if (  quizStats.curAnswerT < quizStats.fastAnswerT || quizStatus.curState == 0)
+	if (quizStats.curAnswerT < quizStats.fastAnswerT || quizStatus.curState == 0)
 		quizStats.fastAnswerT = quizStats.curAnswerT;
 	
 	document.getElementById("statsCur").innerHTML = quizStats.curAnswerT + " sec";
@@ -306,17 +399,23 @@ function statistics()
 	document.getElementById("statsWrongA").innerHTML   = quizStats.wrongA;
 	document.getElementById("statsTotalQ").innerHTML   = quizStats.totalA;		 
 }
-function endQuiz()
-{	
+
+/* Function, that ends the quiz.
+   @constructor  
+
+   @return {Void}.   
+*/
+function endQuiz() {
+	
 	quizStatus.curState = 3;
 	
 	changeButtonState("#endQuizBTN", "disabled", true);
 	changeButtonState("#nextQuestionBTN", "disabled", true);
 	
-	for ( i = 0;i < quizStatus.oCount;i++)
-		changeButtonState("#inputOption"+i,"disabled",true);
+	for (i = 0; i < quizStatus.oCount;i++)
+		changeButtonState("#inputOption" + i, "disabled", true);
 	
 	statistics();
-	infoBlock("#myModal","on");
+	infoBlock("#myModal", "on");
 	quizError("Quiz has ended!");
 }
