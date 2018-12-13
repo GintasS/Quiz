@@ -7,7 +7,8 @@
 	$dbname     = "";
 
 	$conn = new mysqli($servername, $username, $password, $dbname);
-
+	
+	// If connection encountered an error, stop execution.
 	if ($conn->connect_error) 
 		die("Connection to MYSQL DB failed: " . $conn->connect_error);	
 	
@@ -25,12 +26,12 @@
       die("Error loading character set: %s\n" . $conn->error);
 	
 	// If request method is not POST, stop execution.
-	if ( $_SERVER['REQUEST_METHOD'] !== "POST" )
+	if ($_SERVER['REQUEST_METHOD'] !== "POST")
 		die("Unable to check the answer!");
 	
 	// If any POST value is null, stop execution. 
-	if ( $_POST['st'] === null || $_POST['ans'] === null ||
-		$_POST['q'] === null )
+	if ($_POST['st'] === null || $_POST['ans'] === null ||
+		$_POST['q'] === null)
 	{
 		die("Unable to check the answer!");
 	}
@@ -43,7 +44,7 @@
 	   (2 is for checking user submited answer),
 	   stop execution.
 	*/
-	if ( $gameStatus != 2 )
+	if ($gameStatus != 2)
 		die("Unable to check the answer!");
 	
 	// Prepared SQL statement for security.
@@ -66,15 +67,17 @@
 	   0 - Wrong answer
 	   1 - Correct answer.
 	*/
-	if ( $realAnswer !== null )
-	{			
-		if ( $realAnswer === $playerAnswer )
-			echo "1";
+	if ($realAnswer !== null)
+	{	
+		$salt = generateSalt(32);
+
+		if ($realAnswer === $playerAnswer)
+			echo $salt . PHP_EOL . generateHash($salt . $playerQuestion . $salt);
 		else
-			echo "0";		
+			echo $salt . PHP_EOL . generateHash($playerQuestion . $salt);
 	}
 	else
-		echo "0";
+		echo $salt . PHP_EOL . generateHash($playerQuestion . $salt);
 
 	$conn->close();
 ?>
