@@ -7,6 +7,8 @@
 	$dbname     = "";
 	
 	$conn = new mysqli($servername, $username, $password, $dbname);
+	
+	// If connection encountered an error, stop execution.
 	if ($conn->connect_error) 
 		die("Connection to MYSQL DB failed: " . $conn->connect_error);	
 	
@@ -20,16 +22,13 @@
 	$randomNumber = 1;
 	
 	// If request method is not POST, stop execution.	
-	if ( $_SERVER['REQUEST_METHOD'] !== "POST" )
-		die("Unable to check the answer!");		
+	if ($_SERVER['REQUEST_METHOD'] !== "POST")
+		die("Unable to show the answer!");		
 	
 	$randomNumber = $_POST['rnd'];
 	
 	// Prepared SQL statement for security.
-	$result = $conn->prepare("SELECT quiz_answers.Question, quiz_options.Option1, 
-	quiz_options.Option2, quiz_options.Option3, quiz_options.Option4, quiz_images.ImageUrl 
-	FROM ((quiz_answers INNER JOIN quiz_options ON quiz_answers.Id = quiz_options.Id) 
-	INNER JOIN quiz_images ON quiz_images.Id = quiz_options.Id ) WHERE quiz_options.Id = ?");
+	$result = $conn->prepare("");
 	
 	$result->bind_param("i", $randomNumber);
 	
@@ -37,22 +36,22 @@
 	if (!$result->execute()) 
 		die("Execute failed: (" . $result->errno . ") " . $result->error);
 	
-	$result->bind_result($question,$opt1,$opt2,
-						$opt3,$opt4,$backImage);
+	$result->bind_result($question, $opt1, $opt2,
+			   $opt3, $opt4, $backImage);
 	$result->fetch();
 	$result->close();
 	
-	// Print data with JSON structure.
-	echo  "{" . "\r\n" .  '  "info":' . "\r\n" . "\t";
-	echo  '{' . "\r\n" . "\t". '"quiz_info":' . "\r\n" . "\t" . "[" . "\r\n" ;	
-	echo "\t" . "{" . "\r\n" . "\t";
-	echo  '"Question": "'  . $question . '",' . "\r\n" . "\t";
-	echo  '"Option1": "'   . $opt1 . '",' . "\r\n" . "\t";
-	echo  '"Option2": "'   . $opt2 . '",' . "\r\n" . "\t";
-	echo  '"Option3": "'   . $opt3 . '",' . "\r\n" . "\t";	
-	echo  '"Option4": "'   . $opt4 . '",' . "\r\n" . "\t";				
-	echo  '"BackImage": "' . $backImage . '"' . "\r\n" . "\t";	
-	echo  "}" . "\r\n" . "\t" . "]" . "\r\n" . "\t" . "}" . "\r\n" . "}";
+	$jsonData = array();
+	
+	$jsonData["info"]["quiz_info"][] =  array(
+		"Question" => $question,
+		"Option1" => $opt1,
+		"Option2" => $opt2,		
+		"Option3" => $opt3,
+		"Option4" => $opt4,
+		"BackImage" => $backImage	
+	);
+	echo json_encode($jsonData, JSON_PRETTY_PRINT);
 	
 	$conn->close();
 ?>
