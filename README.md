@@ -14,6 +14,12 @@ Subjects:<br><br>
 Astronomy,<br>Biology,<br>Mathematics,<br>Computer science,<br>Physics,<br>History,<br>Geography,<br>Biology<br>
 </strong>
 
+<h3> CHANGELOG 12/13/2018</h3>
+<ul>
+<li> Added hashing feature (SHA-3) to validate
+  answer</li>
+</ul>
+
 <h3> CHANGELOG 11/19/2018</h3>
 <ul>
 <li> Changed Quiz from being client-side only, now
