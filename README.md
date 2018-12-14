@@ -4,12 +4,11 @@
 Total question - <strong>100</strong>.<br><br>
 
 You can play this quiz by clicking this link:
-<a href="http://vilniausfonas.info/en/quiz" target="_blank">url</a><br>
+<a href="http://vilniausfonas.info/en/quiz" target="_blank">url</a>.<br>
 
 Background Pictures are not mine, they've been taken from the internet.<br>
-Background Pictures are not included in this repository due to their size.
 
-Subjects:<br><br>
+Subjects:<br>
 <strong>
 Astronomy,<br>Biology,<br>Mathematics,<br>Computer science,<br>Physics,<br>History,<br>Geography,<br>Biology<br>
 </strong>
