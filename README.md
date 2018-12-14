@@ -16,7 +16,7 @@ Astronomy,<br>Biology,<br>Mathematics,<br>Computer science,<br>Physics,<br>Histo
 
 <h3> CHANGELOG 12/13/2018</h3>
 <ul>
-<li> Added hashing feature (SHA-3) to validate
+<li> Added hashing feature (SHA-3) to validate an
   answer.</li>
 </ul>
 
