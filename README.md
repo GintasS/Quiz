@@ -27,6 +27,7 @@ Background pictures are not mine, they've been taken from the internet.<br>
   <li>Statistics.</li>
   <li>Available on the website, no need to download anything!</li>
   <li>Questions are shown in a random order.</li>
+  <li>Question answers are validated on back-end, so you can't cheat!<br>(Only by remembering them after x pass)</li>
 </ul>
 
 ## <a name="Subjects"></a>Subjects
